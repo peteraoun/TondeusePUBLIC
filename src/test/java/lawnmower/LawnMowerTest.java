@@ -1,6 +1,5 @@
-package test;
+package lawnmower;
 
-import lawnmower.LawnMower;
 import org.junit.Test;
 import orientation.Orientation;
 
