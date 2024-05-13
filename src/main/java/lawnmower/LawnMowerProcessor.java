@@ -15,10 +15,17 @@ public class LawnMowerProcessor implements ItemProcessor<List<String>, List<Lawn
     private int maxX;
     private int maxY;
     private final int numberOfMowerData = 4;
+    private String lineNumber = "";
 
     @Override
     public List<LawnMower> process(List<String> item) {
         List<LawnMower> resultingMowers = new ArrayList<>();
+        if(!lineNumber.equals(item.getLast())){
+            maxX = 0;
+            maxY = 0;
+            lineNumber = item.getLast();
+            item.removeLast();
+        }
         int i = updateLawnSize(item.get(0), item.get(1));
         int numberOfValidMowers = (item.size() - i) / numberOfMowerData;
         checkIfMowerDataIsMissingAndLog(item.size()-i);
@@ -49,7 +56,7 @@ public class LawnMowerProcessor implements ItemProcessor<List<String>, List<Lawn
         int xPos = Integer.parseInt(x);
         int yPos = Integer.parseInt(y);
         if (xPos < 0 || xPos > maxX || yPos < 0 || yPos > maxY) {
-            throw new IllegalArgumentException("Invalid mower position: (" + xPos + ", " + yPos + ")");
+            throw new IllegalArgumentException("Invalid mower size: (" + xPos + ", " + yPos + ")");
         }
         LawnMower mower = new LawnMower(xPos,
                 yPos,

@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class LawnMowerProcessTest {
     @Test
     public void testProcess_OneMower_Success() {
         // Arrange
-        List<String> input = Arrays.asList("5", "5", "1", "2", "N", "LMLMLMLMM");
+        List<String> input = new ArrayList<>(Arrays.asList("5", "5", "1", "2", "N", "LMLMLMLMM", "1"));
         LawnMowerProcessor processor = new LawnMowerProcessor();
 
         // Act
@@ -32,7 +33,7 @@ public class LawnMowerProcessTest {
     @Test
     public void testProcess_MultipleMowers_Success() {
         // Arrange
-        List<String> input = Arrays.asList("5", "5", "1", "2", "N", "LMLMLMLMM", "3", "3", "E", "MMRMMRMRRM");
+        List<String> input = new ArrayList<>(Arrays.asList("5", "5", "1", "2", "N", "LMLMLMLMM", "3", "3", "E", "MMRMMRMRRM","1"));
         LawnMowerProcessor processor = new LawnMowerProcessor();
 
         // Act
@@ -47,7 +48,7 @@ public class LawnMowerProcessTest {
     @Test
     public void testProcess_InvalidLawnSize_Failure() {
         // Arrange
-        List<String> input = Arrays.asList("0", "5", "1", "2", "N", "LMLMLMLMM");
+        List<String> input = new ArrayList<>(Arrays.asList("0", "5", "1", "2", "N", "LMLMLMLMM", "1"));
         LawnMowerProcessor processor = new LawnMowerProcessor();
 
         // Act & Assert
@@ -57,7 +58,7 @@ public class LawnMowerProcessTest {
     @Test
     public void testProcess_InvalidMowerPosition_Failure() {
         // Arrange
-        List<String> input = Arrays.asList("5", "5", "6", "2", "N", "LMLMLMLMM");
+        List<String> input = new ArrayList<>(Arrays.asList("5", "5", "6", "2", "N", "LMLMLMLMM", "1"));
         LawnMowerProcessor processor = new LawnMowerProcessor();
 
         // Act & Assert
@@ -68,7 +69,7 @@ public class LawnMowerProcessTest {
     public void testProcess_MissingData_Info() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
-        List<String> input = Arrays.asList("5", "5", "1", "2", "N");
+        List<String> input = new ArrayList<>(Arrays.asList("5", "5", "1", "2", "N", "1"));
         LawnMowerProcessor processor = new LawnMowerProcessor();
         processor.setLogger(logger);
 

@@ -9,12 +9,14 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +29,17 @@ public class LawnMowerBatchConfiguration {
         return new FlatFileItemReaderBuilder<List<String>>()
                 .name("lawnMowerItemReader")
                 .resource(new FileSystemResource("src/main/java/resources/input.txt"))
-                .lineMapper((line, lineNumber) -> Arrays.asList(line.split(" ")))
+                .lineMapper(lineMapper())
                 .strict(false)
                 .build();
+    }
+
+    private LineMapper<List<String>> lineMapper() {
+        return (line, lineNumber) -> {
+            List<String> list = new ArrayList<>(Arrays.asList(line.split(" "))); // Add split line content
+            list.add(String.valueOf(lineNumber)); // Add line number as the first element
+            return list;
+        };
     }
 
     @Bean
